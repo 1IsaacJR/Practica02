@@ -1,21 +1,5 @@
 --Ejercicio2
 
-{-
-Tipo de dato como guia de ayuda
-
-
-data List a = Empty | Cons a (List a)
-
-listInHaskell:: List a -> [a]
---caso base
-listInHaskell Empty	= []
---Caso en el que convierte la lista
-listInHaskell (Cons x xs) = x: listInHaskell xs
-
-
--}
-
-
 --Funcion que corresponde a las variables de logica proposicional definida previamente
 
 data Prop = Var String
@@ -50,8 +34,13 @@ asignaValores:: [String] -> [(String, Bool)]
  -- Caso base, lista vacía
 asignaValores [] = []
  -- Compara que tipo de valores tiene variable proposicional
-asignaValores vars = if (asignaValoresRec vars) ==  [(head vars,True)] then [(head vars,True)] else [(head vars,False)] 
-
+asignaValores vars
+	      | (asignaValoresRec vars) ==  [(head vars,True)]	=  [(head vars,True)] --else [(head vars,False)]
+	      |	otherwise = (head vars, False) : asignaValores (tail vars)
+ 
+-- Redefinir la función tail tal que tail de "1" es el resto de la lista 1.
+n_tail :: [a] -> [a]
+n_tail (_:xs) = xs
 
 
 -- Ejemplo de una fórmula lógica
@@ -71,32 +60,6 @@ main = do
     print variables
     print "Asignaciones de valores:"
     print valores
-
-
-{-
-
-
---asignaValores (vars p :& q) = asignaValores (p1) ++ asignaValores (p2) 
---asignaValores (No vars)   = if asignaValores (p1) == [[(p,True)]] then [[(p,False)]]
-
-
-asignaValores (p1 :| p2) = asignaValores (p1) ++ asignaValores (p2)
-asignaValores (p1 :/ p2) = asignaValores (p1) ++ asignaValores (p2)
-asignaValores (No p1)   = asignaValores (p1) ++ asignaValores (p2)
-
--- Funcion que compara el segundo elemento del arreglo para saber su asignacion
-
-compararSegundoElemento :: Eq a => [a] -> a -> Bool
-compararSegundoElemento (x:(_:y:_)) valor = y == valor  -- Accedemos al segundo elemento (y) y lo comparamos
-compararSegundoElemento _ _ = False  -- En caso de que la lista sea muy corta o esté vacía, retornamos False.
-
-
-asignaValores (p :& q) = vars p ++ vars q
-asignaValores (p :| q) = vars p ++ vars q
-asignaValores (p :/ q) = vars p ++ vars q
-asignaValores (No p)   = vars p
-
--}
 
 
 
