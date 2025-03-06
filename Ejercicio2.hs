@@ -38,19 +38,40 @@ vars (No p)   = vars p
 
 --Funcion para asignar valores recursivamente
 
-asignaValoresRec :: [String] -> [[(String, Bool)]]
+asignaValoresRec :: [String] -> [(String, Bool)]
  -- Caso base, lista vacía
-asignaValoresRec [] = [[]] 
+asignaValoresRec [] = [] 
 --Para cada variable se le asigna un valor por defecto booleano
-asignaValoresRec (x:xs) = [(x,True) : i | i <- asignaValoresRec xs]
+asignaValoresRec (x:xs) = (x,True) : asignaValoresRec xs
 
 --Funcion que asigna valores dependiendo de los valores predefinidos en la funcion asignaValoresRec
 
-asignaValores:: [String] -> [[(String, Bool)]]
+asignaValores:: [String] -> [(String, Bool)]
  -- Caso base, lista vacía
-asignaValores [] = [[]]
+asignaValores [] = []
  -- Compara que tipo de valores tiene variable proposicional
-asignaValores vars = if (asignaValoresRec vars) ==  [[(head vars,True)]] then [[(head vars,True)]] else [[(head vars,False)]] 
+asignaValores vars = if (asignaValoresRec vars) ==  [(head vars,True)] then [(head vars,True)] else [(head vars,False)] 
+
+
+
+-- Ejemplo de una fórmula lógica
+ejemplo :: Prop
+ejemplo = (Var "p" :& Var "q") :| No (Var "r")
+
+-- Uso de las funciones
+
+-- Obtención de las variables de la fórmula
+variables = vars ejemplo
+-- Asignación de valores a las variables
+valores = asignaValores variables
+
+main :: IO ()
+main = do
+    print "Variables proposicionales:"
+    print variables
+    print "Asignaciones de valores:"
+    print valores
+
 
 {-
 
