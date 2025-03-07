@@ -9,17 +9,13 @@ data ArbolBin = Vacio
 -- Funcion para contar la cantidad de nodos de un arbol binario
 count :: ArbolBin  -> Integer
 count Vacio  = 0
-count (Nodo izq _ der)
-  | izq == Vacio && der == Vacio  = 0 + count izq + count der 
-  | otherwise = 1 + count izq  + count der 
+count (Nodo izq _ der) = 1 + count izq  + count der
 
 --Funcion para contar la cantidad de niveles de profundidad
 height :: ArbolBin  -> Integer
 height Vacio  = 0
-height (Nodo izq _ der) 
-  | izq == Vacio && der == Vacio  = 1 + count izq + count der 
-  | otherwise = count izq  + count der 
-
+height (Nodo izq _ der) =  1 + max(height izq)(height der)
+ 
 --Funcion dado un entero no negativo, devuelva un arbol binario balanceado
 binarioBalanceado :: Integer -> ArbolBin
 binarioBalanceado n

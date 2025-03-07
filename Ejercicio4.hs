@@ -2,7 +2,7 @@
 
 --Funcion que devulve True si es una tautologia (para todas las proposiciones el valor es true)
 tautologia :: [(String, Bool)] -> Bool
-tautologia proposiciones = if all segundoElemento proposiciones == True then True else False
+tautologia proposiciones = all segundoElemento proposiciones
 
 --Comparamos el segundo elemento de una tupla
 segundoElemento :: (String, Bool) -> Bool
